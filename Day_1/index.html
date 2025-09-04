@@ -4,33 +4,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Regestration Form</title>
+    <style>
+        body {
+            background: #f4f6fb;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 40px;
+            color: #333;
+        }
+        .container {
+            border: 2px solid #eaeaea;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+            width: 400px;
+            margin: 40px auto;
+            padding: 32px 36px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        label {
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #444;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        select {
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 4px;
+        }
+        .gender-group {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .gender-group label {
+            margin: 0 4px 0 0;
+            font-weight: normal;
+        }
+        button[type="submit"],
+        button[type="reset"] {
+            padding: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: #4f8cff;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background 0.2s;
+        }
+        button[type="reset"] {
+            background: #e0e0e0;
+            color: #333;
+        }
+        button[type="submit"]:hover {
+            background: #2563eb;
+        }
+        button[type="reset"]:hover {
+            background: #bdbdbd;
+        }
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <form action="./Day_1/welcome.html">
-        <label for="name">Name: </label>
-        <input type="text" name="name" id="name" required>
-        <br><br>
-        <label for="rollno">RollNo: </label>
-        <input type="number" name="rollno" id="rollno" required>
-        <br><br>
-        <label for="email">Email: </label>
-        <input type="email" name="" id="" required>
-        <br><br>
-        <label for="gender">Gender: </label>
-        <input type="radio" name="gender" id="male" required>Male 
-        <input type="radio" name="gender" id="female" required>female
-        <br><br>
-
-        <label for="lang">Language: </label>
-        <select name="lang" id="lang">
-            <option value="" selected>Select Language</option>
-            <option value="java">Java</option>
-            <option value="python">Python</option>
-            <option value="JavaScript">JavaScript</option>
-            <option value="C">C Language</option>
-        </select>
-        <button type="submit">Submit</button>
-        <button type="reset">Reset</button>
-    </form>
+    <h1>Student Registration Portal</h1>
+    <div class="container">
+        <form action="./welcome.html">
+            <div>
+                <label for="name">Name: </label>
+                <input type="text" name="name" id="name" required>
+            </div>
+            <div>
+                <label for="rollno">RollNo: </label>
+                <input type="number" name="rollno" id="rollno" required>
+            </div>
+            <div>
+                <label for="email">Email: </label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div>
+                <label>Gender: </label>
+                <div class="gender-group">
+                    <input type="radio" name="gender" id="male" value="male" required>
+                    <label for="male">Male</label>
+                    <input type="radio" name="gender" id="female" value="female" required>
+                    <label for="female">Female</label>
+                </div>
+            </div>
+            <div>
+                <label for="lang">Language: </label>
+                <select name="lang" id="lang" required>
+                    <option value="" selected>Select Language</option>
+                    <option value="java">Java</option>
+                    <option value="python">Python</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="C">C Language</option>
+                </select>
+            </div>
+            <div class="button-group">
+                <button type="submit">Submit</button>
+                <button type="reset">Reset</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
