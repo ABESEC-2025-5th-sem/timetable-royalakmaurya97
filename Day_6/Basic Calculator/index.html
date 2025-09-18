@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header style="text-align: center;">
+        <p>Calculator</p>
+    </header>
+
+    <div class="container">
+        <span id="error"></span><br><br>
+        <label for="num1">Num1: </label>
+        <input type="number" name="num1" id="num1"><br><br>
+        <label for="num2">Num2: </label>
+        <input type="number" name="num2" id="num2"><br><br>
+
+        <label for="output">Output</label>
+        <input type="number" name="output" id="output"><br><br>
+
+        <input type="button" value="ADD" onclick="add()">
+        <input type="button" value="SUB" onclick="sub()">
+        <input type="button" value="MUL" onclick="mul()">
+        <input type="button" value="DIV" onclick="div()">
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
