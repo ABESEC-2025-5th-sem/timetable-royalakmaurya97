@@ -1,5 +1,5 @@
 import './App.css';
-import productData from './product.json';
+
 
 const Header = () => {
   return (
@@ -32,9 +32,9 @@ const Search = () => {
 const Product = ({product}) => {
   return (
     <div className='product'>
-      <img className='prod-img' src={product.Image} alt={product["Product Name"]}/>
-      <h4>{product["Product Name"]}</h4>
-      <h5>${product.Price}</h5>
+    <img className='prod-img'/>
+    <h4>Crystal Moon Lamp</h4>
+    <h5>199$</h5>
     </div>
   )
 }
@@ -45,10 +45,19 @@ const Body = () => {
     <div className='body-container'>
       <Search/>
       <div className='product-container'>
-        {productData.map((product, index) => (
-          <Product key={index} product={product} />
-        ))}
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
+        <Product/>
       </div>
+
     </div>
   )
 }
@@ -66,7 +75,9 @@ const App = () => {
     <div className='app'>
       <Header/>
       <Body/>
+      <Product/>
       <Footer/>
+
     </div>
   )
 }
