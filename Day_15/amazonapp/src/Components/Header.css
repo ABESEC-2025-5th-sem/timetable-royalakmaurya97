@@ -1,0 +1,146 @@
+/* Header Container */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 40px;
+  background: linear-gradient(135deg, #232f3e 0%, #131a22 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 3px solid #febd69;
+}
+
+/* Logo Section */
+.header img {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.header img:hover {
+  transform: scale(1.05);
+}
+
+/* App Title */
+.header h2 {
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 20px;
+  font-family: 'Arial', sans-serif;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.header h2:hover {
+  color: #febd69;
+}
+
+/* Navigation */
+.header nav {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+.header nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+  font-family: 'Arial', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* Link Hover Effect */
+.header nav a:hover {
+  background-color: #febd69;
+  color: #131a22;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(254, 189, 105, 0.3);
+}
+
+/* Active Link Effect */
+.header nav a.active {
+  background-color: #ff9900;
+  color: #131a22;
+  font-weight: 600;
+}
+
+/* Underline Animation */
+.header nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: #febd69;
+  transition: width 0.3s ease;
+}
+
+.header nav a:hover::after {
+  width: 80%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    flex-wrap: wrap;
+    padding: 15px 20px;
+    justify-content: center;
+  }
+
+  .header h2 {
+    font-size: 22px;
+    margin: 10px 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .header nav {
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+  }
+
+  .header nav a {
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 12px 15px;
+  }
+
+  .header img {
+    height: 40px;
+  }
+
+  .header h2 {
+    font-size: 18px;
+  }
+
+  .header nav {
+    gap: 10px;
+  }
+
+  .header nav a {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+}
