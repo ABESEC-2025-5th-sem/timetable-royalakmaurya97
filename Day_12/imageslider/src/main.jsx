@@ -6,7 +6,7 @@ import Count from './count.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {/* <App /> */}
+    <App />
     < Count/>
   </StrictMode>,
 )

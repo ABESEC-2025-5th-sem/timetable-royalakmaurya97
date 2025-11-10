@@ -1,5 +1,6 @@
 import React from 'react'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import './App.css'
 import Header from './Components/Header'
 import Body from './Components/Body'
 import Footer from './Components/Footer'
@@ -13,14 +14,16 @@ const App = () => {
     <div className='app-container'>
       <Router>
         <Header/>
-        <Routes>
-          <Route path="/" element={<Home/>} ></Route>
-          <Route path="/about" element={<About/>}></Route>
-          <Route path="/cart" element={<Cart/>}></Route>
-          <Route path="/product" element={<Body/>}></Route>
-        </Routes>
+        <main>
+          <Routes>
+            <Route path="/" element={<Home/>} ></Route>
+            <Route path="/about" element={<About/>}></Route>
+            <Route path="/cart" element={<Cart/>}></Route>
+            <Route path="/product" element={<Body/>}></Route>
+          </Routes>
+        </main>
+        <Footer/>
       </Router>
-      <Footer/>
     </div>
   )
 }

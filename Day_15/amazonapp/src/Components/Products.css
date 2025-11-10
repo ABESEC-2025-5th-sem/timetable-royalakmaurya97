@@ -1,0 +1,143 @@
+/* Product Card */
+.product {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  width: 280px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.product:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Product Image */
+.product img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.product:hover img {
+  transform: scale(1.05);
+}
+
+/* Product Title */
+.product h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #232f3e;
+  margin: 0;
+  line-height: 1.4;
+  min-height: 50px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Product Price */
+.product h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #febd69;
+  margin: 0;
+}
+
+.product h3::before {
+  content: '$';
+  font-size: 18px;
+  vertical-align: super;
+}
+
+/* Product Rating */
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #ff9900;
+  font-size: 14px;
+}
+
+.product-rating span {
+  color: #666;
+  font-size: 13px;
+}
+
+/* Product Category Badge */
+.product-category {
+  display: inline-block;
+  background-color: #232f3e;
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Add to Cart Button */
+.add-to-cart-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #febd69;
+  color: #131a22;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #ff9900;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(254, 189, 105, 0.3);
+}
+
+.add-to-cart-btn:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .product {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .product img {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product {
+    padding: 15px;
+  }
+
+  .product h2 {
+    font-size: 16px;
+    min-height: 45px;
+  }
+
+  .product h3 {
+    font-size: 20px;
+  }
+
+  .product img {
+    height: 180px;
+  }
+}
