@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File System API - Web Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .operations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .operation-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .operation-card h3 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #495057;
+            font-weight: 500;
+        }
+        
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        #response {
+            background: #212529;
+            color: #0f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        
+        .error {
+            color: #ff6b6b;
+        }
+        
+        .success {
+            color: #51cf66;
+        }
+        
+        .info {
+            color: #74c0fc;
+        }
+        
+        .files-list {
+            margin-top: 20px;
+        }
+        
+        .file-item {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #667eea;
+        }
+        
+        .file-name {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .file-size {
+            color: #868e96;
+            font-size: 12px;
+        }
+        
+        .quick-actions {
+            background: #e7f5ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #339af0;
+        }
+        
+        .quick-actions h3 {
+            color: #1864ab;
+            margin-bottom: 10px;
+        }
+        
+        .quick-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #339af0;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .quick-btn:hover {
+            background: #1c7ed6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📁 File System API</h1>
+        <p class="subtitle">Web Interface for Testing File Operations</p>
+        
+        <div class="quick-actions">
+            <h3>🚀 Quick Actions</h3>
+            <button class="quick-btn" onclick="listFiles()">📋 List All Files</button>
+            <button class="quick-btn" onclick="checkConnection()">🔌 Test Connection</button>
+            <button class="quick-btn" onclick="clearResponse()">🗑️ Clear Output</button>
+        </div>
+        
+        <div class="operations">
+            <!-- Create File -->
+            <div class="operation-card">
+                <h3>✅ Create File</h3>
+                <div class="form-group">
+                    <label>Filename:</label>
+                    <input type="text" id="createFilename" placeholder="example.txt" value="test.txt">
+                </div>
+                <div class="form-group">
+                    <label>Content:</label>
+                    <textarea id="createContent" placeholder="File content...">Hello, World!
+This is a test file.</textarea>
+                </div>
+                <button onclick="createFile()">Create File</button>
+            </div>
+            
+            <!-- Read File -->
+            <div class="operation-card">
+                <h3>📖 Read File</h3>
+                <div class="form-group">
+                    <label>Filename:</label>
+                    <input type="text" id="readFilename" placeholder="example.txt" value="test.txt">
+                </div>
+                <button onclick="readFile()">Read File</button>
+            </div>
+            
+            <!-- Write File -->
+            <div class="operation-card">
+                <h3>✏️ Write/Overwrite File</h3>
+                <div class="form-group">
+                    <label>Filename:</label>
+                    <input type="text" id="writeFilename" placeholder="example.txt" value="test.txt">
+                </div>
+                <div class="form-group">
+                    <label>Content:</label>
+                    <textarea id="writeContent" placeholder="New content...">This will replace all content!</textarea>
+                </div>
+                <button onclick="writeFile()">Write File</button>
+            </div>
+            
+            <!-- Append File -->
+            <div class="operation-card">
+                <h3>➕ Append to File</h3>
+                <div class="form-group">
+                    <label>Filename:</label>
+                    <input type="text" id="appendFilename" placeholder="example.txt" value="test.txt">
+                </div>
+                <div class="form-group">
+                    <label>Content to Append:</label>
+                    <textarea id="appendContent" placeholder="Content to append...">
+Appended line!</textarea>
+                </div>
+                <button onclick="appendFile()">Append to File</button>
+            </div>
+            
+            <!-- Delete File -->
+            <div class="operation-card">
+                <h3>🗑️ Delete File</h3>
+                <div class="form-group">
+                    <label>Filename:</label>
+                    <input type="text" id="deleteFilename" placeholder="example.txt" value="test.txt">
+                </div>
+                <button onclick="deleteFile()">Delete File</button>
+            </div>
+            
+            <!-- Rename File -->
+            <div class="operation-card">
+                <h3>✏️ Rename File</h3>
+                <div class="form-group">
+                    <label>Old Name:</label>
+                    <input type="text" id="renameOld" placeholder="old.txt" value="test.txt">
+                </div>
+                <div class="form-group">
+                    <label>New Name:</label>
+                    <input type="text" id="renameNew" placeholder="new.txt" value="renamed.txt">
+                </div>
+                <button onclick="renameFile()">Rename File</button>
+            </div>
+            
+            <!-- Copy File -->
+            <div class="operation-card">
+                <h3>📄 Copy File</h3>
+                <div class="form-group">
+                    <label>Source:</label>
+                    <input type="text" id="copySource" placeholder="source.txt" value="test.txt">
+                </div>
+                <div class="form-group">
+                    <label>Destination:</label>
+                    <input type="text" id="copyDest" placeholder="copy.txt" value="test_copy.txt">
+                </div>
+                <button onclick="copyFile()">Copy File</button>
+            </div>
+            
+            <!-- File Info -->
+            <div class="operation-card">
+                <h3>📊 Get File Info</h3>
+                <div class="form-group">
+                    <label>Filename:</label>
+                    <input type="text" id="infoFilename" placeholder="example.txt" value="test.txt">
+                </div>
+                <button onclick="getFileInfo()">Get Info</button>
+            </div>
+            
+            <!-- Check Exists -->
+            <div class="operation-card">
+                <h3>🔍 Check if Exists</h3>
+                <div class="form-group">
+                    <label>Filename:</label>
+                    <input type="text" id="existsFilename" placeholder="example.txt" value="test.txt">
+                </div>
+                <button onclick="checkExists()">Check Exists</button>
+            </div>
+        </div>
+        
+        <div id="response">
+Ready to test File System API...
+Try "List All Files" to get started!
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000/api/files';
+        
+        function showResponse(data, isError = false) {
+            const responseDiv = document.getElementById('response');
+            const timestamp = new Date().toLocaleTimeString();
+            const className = isError ? 'error' : 'success';
+            responseDiv.innerHTML = `<span class="${className}">[${timestamp}]</span>\n${JSON.stringify(data, null, 2)}`;
+        }
+        
+        function showInfo(message) {
+            const responseDiv = document.getElementById('response');
+            const timestamp = new Date().toLocaleTimeString();
+            responseDiv.innerHTML = `<span class="info">[${timestamp}] ${message}</span>`;
+        }
+        
+        function clearResponse() {
+            document.getElementById('response').innerHTML = 'Output cleared. Ready for new operations...';
+        }
+        
+        async function checkConnection() {
+            try {
+                showInfo('Testing connection...');
+                const response = await fetch('http://localhost:3000/');
+                const data = await response.json();
+                showResponse(data);
+            } catch (error) {
+                showResponse({ error: 'Cannot connect to server. Make sure server is running on port 3000!' }, true);
+            }
+        }
+        
+        async function createFile() {
+            const filename = document.getElementById('createFilename').value;
+            const content = document.getElementById('createContent').value;
+            
+            try {
+                showInfo('Creating file...');
+                const response = await fetch(`${API_BASE}/create`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ filename, content })
+                });
+                const data = await response.json();
+                showResponse(data, !response.ok);
+            } catch (error) {
+                showResponse({ error: error.message }, true);
+            }
+        }
+        
+        async function readFile() {
+            const filename = document.getElementById('readFilename').value;
+            
+            try {
+                showInfo('Reading file...');
+                const response = await fetch(`${API_BASE}/read/${filename}`);
+                const data = await response.json();
+                showResponse(data, !response.ok);
+            } catch (error) {
+                showResponse({ error: error.message }, true);
+            }
+        }
+        
+        async function writeFile() {
+            const filename = document.getElementById('writeFilename').value;
+            const content = document.getElementById('writeContent').value;
+            
+            try {
+                showInfo('Writing file...');
+                const response = await fetch(`${API_BASE}/write`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ filename, content })
+                });
+                const data = await response.json();
+                showResponse(data, !response.ok);
+            } catch (error) {
+                showResponse({ error: error.message }, true);
+            }
+        }
+        
+        async function appendFile() {
+            const filename = document.getElementById('appendFilename').value;
+            const content = document.getElementById('appendContent').value;
+            
+            try {
+                showInfo('Appending to file...');
+                const response = await fetch(`${API_BASE}/append`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ filename, content })
+                });
+                const data = await response.json();
+                showResponse(data, !response.ok);
+            } catch (error) {
+                showResponse({ error: error.message }, true);
+            }
+        }
+        
+        async function deleteFile() {
+            const filename = document.getElementById('deleteFilename').value;
+            
+            if (!confirm(`Are you sure you want to delete "${filename}"?`)) return;
+            
+            try {
+                showInfo('Deleting file...');
+                const response = await fetch(`${API_BASE}/delete/${filename}`, {
+                    method: 'DELETE'
+                });
+                const data = await response.json();
+                showResponse(data, !response.ok);
+            } catch (error) {
+                showResponse({ error: error.message }, true);
+            }
+        }
+        
+        async function renameFile() {
+            const oldname = document.getElementById('renameOld').value;
+            const newname = document.getElementById('renameNew').value;
+            
+            try {
+                showInfo('Renaming file...');
+                const response = await fetch(`${API_BASE}/rename`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ oldname, newname })
+                });
+                const data = await response.json();
+                showResponse(data, !response.ok);
+            } catch (error) {
+                showResponse({ error: error.message }, true);
+            }
+        }
+        
+        async function copyFile() {
+            const source = document.getElementById('copySource').value;
+            const destination = document.getElementById('copyDest').value;
+            
+            try {
+                showInfo('Copying file...');
+                const response = await fetch(`${API_BASE}/copy`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ source, destination })
+                });
+                const data = await response.json();
+                showResponse(data, !response.ok);
+            } catch (error) {
+                showResponse({ error: error.message }, true);
+            }
+        }
+        
+        async function getFileInfo() {
+            const filename = document.getElementById('infoFilename').value;
+            
+            try {
+                showInfo('Getting file info...');
+                const response = await fetch(`${API_BASE}/info/${filename}`);
+                const data = await response.json();
+                showResponse(data, !response.ok);
+            } catch (error) {
+                showResponse({ error: error.message }, true);
+            }
+        }
+        
+        async function checkExists() {
+            const filename = document.getElementById('existsFilename').value;
+            
+            try {
+                showInfo('Checking if file exists...');
+                const response = await fetch(`${API_BASE}/exists/${filename}`);
+                const data = await response.json();
+                showResponse(data, !response.ok);
+            } catch (error) {
+                showResponse({ error: error.message }, true);
+            }
+        }
+        
+        async function listFiles() {
+            try {
+                showInfo('Loading file list...');
+                const response = await fetch(`${API_BASE}/list`);
+                const data = await response.json();
+                showResponse(data, !response.ok);
+            } catch (error) {
+                showResponse({ error: error.message }, true);
+            }
+        }
+        
+        // Test connection on load
+        window.onload = () => {
+            checkConnection();
+        };
+    </script>
+</body>
+</html>
