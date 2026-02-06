@@ -22,7 +22,7 @@ const server = http.createServer((req, res) => {
             }
             res.setHeader('Content-Type', 'text/css');
             res.end(cssContent);
-        })
+        });
     }
     else {
         res.statusCode = 400;
